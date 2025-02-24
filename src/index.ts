@@ -29,4 +29,15 @@ app.get("/", (c) => {
 
 app.get("/posts", (c) => c.json({ posts: blogPosts }));
 
+app.get("/posts/:id", (c) => {
+  const id = c.req.param("id");
+  const post = blogPosts.find((p) => p.id === id);
+
+  if (!post) {
+    return c.json({ message: "not found this page" }, 404);
+  }
+
+  return c.json(post);
+});
+
 export default app;
