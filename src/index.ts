@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { prettyJSON } from "hono/pretty-json";
 
 const app = new Hono();
 
@@ -20,8 +21,12 @@ let blogPosts = [
   },
 ];
 
+app.use("*", prettyJSON());
+
 app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
+
+app.get("/posts", (c) => c.json({ posts: blogPosts }));
 
 export default app;
